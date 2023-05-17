@@ -13,7 +13,7 @@ const TableComp = () => {
     const onEdit = (userDATA: stateType) => {
       
         changeUserData(userDATA, false);
-        navigate('/edit')
+        navigate('/edit/1')
     }
 
     const onView = (userDATA: stateType) => {

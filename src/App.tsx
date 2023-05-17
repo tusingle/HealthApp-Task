@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <ShowHealthData />
       },
       {
-        path: '/edit',
+        path: '/edit/:userId',
         element: <EditHealthData />
       },
       {

@@ -9,31 +9,40 @@ import { TABLE, VIEW_MODE, stateType } from "../store/store-types";
 
 const HealthDataContext = createContext({
     users: initalState,
+    dispatchFun: (action: any) => {
+
+    },
     currentPageState: TABLE,
     userData: initalState[0],
-    changeView: (value: VIEW_MODE) => {} ,
-    changeUserData: (userData: stateType, changeState: boolean) => {}
+    changeView: (value: VIEW_MODE) => { },
+    changeUserData: (userData: stateType, changeState: boolean) => { }
 })
 
 
-export const HealthDataContextWrapper:React.FC<any> = (props) => {
+export const HealthDataContextWrapper: React.FC<any> = (props) => {
 
-    const [userState,dispatch] = useReducer(reducerFunction , initalStateValue)
+    const [userState, dispatch] = useReducer(reducerFunction, initalStateValue)
+    const dispatchFun = (action: any) => {
+        dispatch(action)
+
+    }
+
+
     const [currentPageState, setCurrentPageState] = useState<VIEW_MODE>(TABLE)
-    
-    const [ userData, setUserData ] = useState<stateType>(initalState[0]);
-    
-    
+
+    const [userData, setUserData] = useState<stateType>(initalState[0]);
+
+
     const changeUserData = (userData: stateType, changeState = false) => {
-        setUserData(userData)
-        if(changeState){
+
+        if (changeState) {
             const action = {
                 type: 'UPDATE_USER_DATA',
                 userData
             }
             dispatch(action)
         }
-     
+
     }
 
     const changeView = (value: VIEW_MODE) => {
@@ -43,19 +52,20 @@ export const HealthDataContextWrapper:React.FC<any> = (props) => {
     const { children } = props
     return (
         <HealthDataContext.Provider value={
-           {
-             users:userState,
-             currentPageState: currentPageState,
-            changeView:changeView,
-            userData: userData,
-            changeUserData: changeUserData
+            {
+                users: userState,
+                dispatchFun: dispatchFun,
+                currentPageState: currentPageState,
+                changeView: changeView,
+                userData: userData,
+                changeUserData: changeUserData
             }
         }>
-        <div className={styless["container-main"]}>
-            {children}
-        </div>
+            <div className={styless["container-main"]}>
+                {children}
+            </div>
         </HealthDataContext.Provider>
-      
+
     )
 }
 
